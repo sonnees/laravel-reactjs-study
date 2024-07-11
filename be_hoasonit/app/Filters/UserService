@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\User;
+
+class UserService
+{
+    public function createUser(array $data)
+    {
+        // Logic tạo user
+        return User::create($data);
+    }
+
+    public function getUserById($id)
+    {
+        // Logic lấy thông tin user
+        return User::findOrFail($id);
+    }
+
+}

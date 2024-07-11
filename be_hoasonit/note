@@ -1,0 +1,4 @@
+php artisan migrate:fresh --seed
+php artisan make:resource V1\ProductResource
+php artisan make:middleware TenMiddleware
+composer require fruitcake/laravel-cors

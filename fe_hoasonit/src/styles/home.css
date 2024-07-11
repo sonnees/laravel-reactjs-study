@@ -1,0 +1,17 @@
+.carousel-img-container {
+    display: flex;
+    align-items: center;
+}
+
+.carousel-img {
+    max-height: 400px;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 991px) {
+    .carousel-img {
+        max-height: 100px;
+    }
+}
