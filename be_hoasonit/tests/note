@@ -3,3 +3,15 @@ php artisan make:test ExampleTest --unit
 php artisan test
 
 php artisan test --filter ExampleTest
+
+=== Mock ===
+$userService = $this->createMock(UserService::class);
+
+$userService->expects($this->once())
+->method('func_1')
+->willReturn(true);
+
+->willReturn(collect([
+['id' => 1, 'name' => 'Product 1'],
+['id' => 2, 'name' => 'Product 2']
+]));

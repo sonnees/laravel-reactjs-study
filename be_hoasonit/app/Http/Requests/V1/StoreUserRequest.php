@@ -13,8 +13,7 @@ class StoreUserRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
-
-        // return auth()->user()->role === 'admin';
+        // return auth()->user() != null;
     }
 
     /**
@@ -26,9 +25,10 @@ class StoreUserRequest extends FormRequest
     {
         return [
             // 'enum' => ['required', Rule::in(['I',])],
+            // 'date' => ['date_format:Y-m-d H:i:s'],
             'name' => ['required'],
-            'email' => ['required|email|unique:users,email'],
-            'password' => ['required|string|min:6'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:6'],
         ];
     }
 

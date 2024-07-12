@@ -2,3 +2,27 @@ php artisan migrate:fresh --seed
 php artisan make:resource V1\ProductResource
 php artisan make:middleware TenMiddleware
 composer require fruitcake/laravel-cors
+
+php artisan route:list
+
+=== JWT ===
+php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+php artisan jwt:secret
+
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2xvZ2luIiwiaWF0IjoxNzIwNzU1MjE1LCJleHAiOjE3MjA3NTg4MTUsIm5iZiI6MTcyMDc1NTIxNSwianRpIjoiaWh0dEhVVkxlZEs2NGdQRCIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.e6VWjtDQqr-5-_t7fuTIzjvu3uJ-keDvkUtioiXZww0
+
+=== SQL ===
+Query Builder
+$users = DB::table('users')
+->where('status', 'active')
+->orderBy('created_at', 'desc')
+->get();
+
+Eloquent
+$users = User::where('status', 'active')
+->orderBy('created_at', 'desc')
+->get();
+
+SQL raw
+$users = DB::select('SELECT * FROM users WHERE status = ?', ['active']);
+

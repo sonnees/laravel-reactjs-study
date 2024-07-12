@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Product;
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\V1\StoreProductRequest;
+use App\Http\Requests\V1\UpdateProductRequest;
 use App\Http\Resources\V1\ProductCollection;
 use App\Http\Resources\V1\ProductResource;
 use App\Http\Controllers\Api\Controller;
@@ -19,10 +19,10 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        
         $filter = new ProductFilter();
         $filterItems = $filter->transform($request); //[['column','operation','value']]
-        Log::info($filterItems);
+        
+        Log::info("filterItems: " . $filterItems);
         
         $products = Product::where($filterItems)->paginate();
         return new ProductCollection($products->appends($request->query()));

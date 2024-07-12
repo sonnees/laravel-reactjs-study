@@ -9,6 +9,7 @@ class SkipCsrfToken
 {
     public function handle(Request $request, Closure $next)
     {
+        $request->attributes->set('skip-csrf', true);
         return $next($request);
     }
 }
