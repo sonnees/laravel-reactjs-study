@@ -26,3 +26,9 @@ $users = User::where('status', 'active')
 SQL raw
 $users = DB::select('SELECT * FROM users WHERE status = ?', ['active']);
 
+
+=== OpenAPI ===
+composer require darkaonline/l5-swagger
+php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
+php artisan l5-swagger:generate
+http://127.0.0.1:8000/api/documentation

@@ -9,7 +9,9 @@ use App\Http\Resources\V1\ProductCollection;
 use App\Http\Resources\V1\ProductResource;
 use App\Http\Controllers\Api\Controller;
 use App\Filters\V1\ProductFilter;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
@@ -22,18 +24,8 @@ class ProductController extends Controller
         $filter = new ProductFilter();
         $filterItems = $filter->transform($request); //[['column','operation','value']]
         
-        Log::info("filterItems: " . $filterItems);
-        
         $products = Product::where($filterItems)->paginate();
         return new ProductCollection($products->appends($request->query()));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -41,7 +33,25 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        $user = Auth::user();
+        $product = null;
+        try {
+
+            if ($user instanceof User) {
+                $product = $user->products()->create([
+                    'name' => $request->name,
+                    'description' => $request->description,
+                    'url' => $request->url,
+                    'date' => $request->date,
+                ]);
+            } else {
+                return response()->json("", 404);
+            }
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+
+        return response()->json($product, 201);
     }
 
     /**

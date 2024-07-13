@@ -4,6 +4,14 @@ import { useUser } from '../components/context/user-context';
 import { Container, Carousel } from 'react-bootstrap';
 
 export default function Home() {
+
+    const navigate = useNavigate();
+    const { name } = useUser();
+    const [isLoading, setLoading] = useState(false);
+
+    useEffect(() => {
+    }, [isLoading]);
+
     return (
         <Container className='mt-4 mb-4'>
             <Carousel data-bs-theme="dark" >

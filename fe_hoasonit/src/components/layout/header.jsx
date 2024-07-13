@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import '../styles/header.css';
+import {useUser } from '../context/user-context';
 
 export default function Header() {
+    const {name} = useUser()
+    useEffect(()=>{
+        // if (name != localStorage.getItem("userName"))
+            // window.location.reload()
+    }, [])
     return (
         <Navbar expand="lg" className="bg-body-tertiary" sticky="top">
             <Container>
@@ -30,11 +36,20 @@ export default function Header() {
                             Management
                         </Nav.Link>
                     </Nav>
-                    <Nav>
-                        <Nav.Link as={Link} to="/login">
-                            <i className="bi bi-box-arrow-in-left"></i> Login
-                        </Nav.Link>
-                    </Nav>
+                    {name === '' ? (
+                        <Nav>
+                            <Nav.Link as={Link} to="/login">
+                                <i className="bi bi-box-arrow-in-right"> </i> Login
+                            </Nav.Link>
+                        </Nav>
+                    ) : (
+                        <Nav>
+                            <Nav.Link as={Link} to="/login">
+                                <i className="bi bi-box-arrow-in-left">  </i> {name}
+                            </Nav.Link>
+                        </Nav>
+                    )}
+
                 </Navbar.Collapse>
             </Container>
         </Navbar>
