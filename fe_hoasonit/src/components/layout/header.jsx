@@ -2,14 +2,12 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import '../styles/header.css';
-import {useUser } from '../context/user-context';
+import { useUser } from '../context/user-context';
 
 export default function Header() {
-    const {name} = useUser()
-    useEffect(()=>{
-        // if (name != localStorage.getItem("userName"))
-            // window.location.reload()
-    }, [])
+    const { name, role } = useUser()
+    useEffect(() => {
+    }, [name])
     return (
         <Navbar expand="lg" className="bg-body-tertiary" sticky="top">
             <Container>
@@ -31,10 +29,12 @@ export default function Header() {
                             `nav-link ${isActive ? 'fw-bold text-primary' : ''}`}>
                             Products
                         </Nav.Link>
-                        <Nav.Link as={NavLink} to="/management" className={({ isActive }) =>
-                            `nav-link ${isActive ? 'fw-bold text-primary' : ''}`}>
-                            Management
-                        </Nav.Link>
+                        {role === 'admin' &&
+                            <Nav.Link as={NavLink} to="/management" className={({ isActive }) =>
+                                `nav-link ${isActive ? 'fw-bold text-primary' : ''}`}>
+                                Management
+                            </Nav.Link>
+                        }
                     </Nav>
                     {name === '' ? (
                         <Nav>

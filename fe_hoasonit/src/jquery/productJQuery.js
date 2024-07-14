@@ -1,48 +1,38 @@
 import $ from 'jquery';
-import { loginApi } from '../utils/api';
+import { getProductsApi } from '../utils/api';
 import Cookies from 'js-cookie';
 import {  } from 'react-router-dom';
 
-const productJQ = (login, navigate, setLoading) => {
+const LoadProducts = (navigate, setProducts, setLoading, setPage, loadPage) => {
 
-    $("#form_login").on("submit", async function (event) {
-        event.preventDefault();
+    $(async function (event){
         setLoading(true);
-        
-        const formData = {};
-        let error = false;
-        $(this).find('input').each(function () {
-            const inputName = $(this).attr('name');
-            const inputValue = $(this).val().trim();
-
-            if (inputValue === '') {
-                $("#error").text(`Field '${inputName}' is required.`);
-                error = true;
-                return false;
-            }
-
-            formData[inputName] = inputValue;
-        });
-
-        if (error) return;
-
-        try {
-            const response = await loginApi(formData);
-            Cookies.set(
-                'token',
-                response.access_token,
-                { expires: response.expires_in / 3600 / 24 }
-            );
-            login(response.user) // use context
-            setLoading(false)
-            navigate('/home');
-        } catch (e) {
-            alert("Login failed" + e);
+        if (Cookies.get("token")==='') {
+            navigate('/login')
             return
         }
-    });
+
+        try{
+            const response = await getProductsApi(loadPage, undefined, undefined);
+            console.log(response);
+
+            setPage(response.meta);
+            setProducts(response.data);
+            setLoading(false);
+            return
+        } catch(e){
+            if (e == "AxiosError: Request failed with status code 401") {
+                navigate('/login')
+                return
+            }
+            setProducts([]);
+            setLoading(false);
+            alert("Load products failed" + e);
+            return
+        }
+    })
 };
 
 export {
-    productJQ
+    LoadProducts
 };

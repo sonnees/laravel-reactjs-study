@@ -24,7 +24,7 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
-            'url' => ['required', 'url', 'max:255'],
+            'url' => ['required', 'max:255'],
             'date' => ['required', 'date'],
         ];
     }

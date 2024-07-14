@@ -23,8 +23,13 @@ class ProductController extends Controller
     {
         $filter = new ProductFilter();
         $filterItems = $filter->transform($request); //[['column','operation','value']]
-        
-        $products = Product::where($filterItems)->paginate();
+
+        $perPage = request('per_page', 15); 
+        $sortDirection = request('sort_direction', 'desc'); 
+
+        $products = Product::where($filterItems)
+                            ->orderBy('date', $sortDirection)
+                            ->paginate($perPage);
         return new ProductCollection($products->appends($request->query()));
     }
 
@@ -83,6 +88,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        Log::info($product);
+        return $product->delete();
     }
 }

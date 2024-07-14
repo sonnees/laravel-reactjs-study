@@ -36,12 +36,12 @@ export default function Login() {
 
                         <Form.Group className="mb-3">
                             <Form.Label>Email</Form.Label>
-                            <Form.Control type="text" placeholder="Enter email" name="email" defaultValue={'son@gmail.org'}/>
+                            <Form.Control type="text" placeholder="Enter email" name="email" />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password" name="password" defaultValue={'123456'} />
+                            <Form.Control type="password" placeholder="Password" name="password" defaultValue={'password'} />
                         </Form.Group>
                         
                         <Form.Text id="error" muted>

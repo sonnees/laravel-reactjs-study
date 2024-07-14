@@ -1,0 +1,31 @@
+#image-placeholder {
+    width: 100% !important; 
+    height: 150px !important;
+    background-color: wheat
+}
+
+.fixed-height-text {
+    display: -webkit-box;
+    display: box;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 50px;
+    line-height: 1.5;
+}
+
+.fixed-height-title {
+    display: -webkit-box;
+    display: box;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 20;
+    line-height: 1.5;
+}

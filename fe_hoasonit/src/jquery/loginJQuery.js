@@ -1,11 +1,11 @@
 import $ from 'jquery';
 import { loginApi } from '../utils/api';
-import Cookies from 'js-cookie';
 
 const loginJQ = (login, logout, navigate, setLoading) => {
-    $(async function(){
+    $(async function (){
         await logout();
     })
+    
     $("#logo").on("click", async function (event) {
         navigate('/home', { replace: false });
     });
@@ -23,6 +23,7 @@ const loginJQ = (login, logout, navigate, setLoading) => {
             if (inputValue === '') {
                 $("#error").text(`Field '${inputName}' is required.`);
                 error = true;
+                setLoading(false)
                 return false;
             }
 
@@ -32,18 +33,14 @@ const loginJQ = (login, logout, navigate, setLoading) => {
         if (error) return;
 
         try {
+            $("#error").text('');
             const response = await loginApi(formData);
-            await login(response.user) // use context
-            Cookies.set(
-                'token',
-                response.access_token,
-                { expires: response.expires_in / 3600 / 24 }
-            );
+            await login(response.user, response.access_token) // use context
             setLoading(false)
-            $("#logo").trigger("click");
-            // navigate('/home', { forceRefresh: true })
+            navigate('/home')
         } catch (e) {
-            alert("Login failed" + e);
+            $("#error").text(`Gmail or password ... not exacty`);
+            setLoading(false)
             return
         }
     });

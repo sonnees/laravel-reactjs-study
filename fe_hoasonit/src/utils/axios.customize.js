@@ -13,6 +13,7 @@ instance.interceptors.request.use(function (config) {
     // Do something before request is sent
     const token = Cookies.get('token');
     config.headers.Authorization = token ? `Bearer ${token}` : '';
+    config.headers["Content-Type"] = 'application/json';
 
     return config;
 }, function (error) {
